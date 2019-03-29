@@ -1,0 +1,85 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="fps.css">
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+
+	<img src="images/save-map-icon.png" alt="" id="save-map-icon">
+	<img src="images/load-map-icon.png" alt="" id="load-map-icon">
+	<img src="images/settings-map-icon.png" alt="" id="settings-map-icon">
+	<img src="images/add-map-object-icon.png" alt="" id="add-map-object-icon">
+
+	<textarea id = "loadDataTextArea" placeholder="Copy here data from a save file..."></textarea>
+	<input type = "button" id = "confirmDataMapLoad" value="Confirm Load">
+
+	<input type="text" name="url" maxlength="100" id="SMTH">
+
+	<form class="form-style-7" id="enterData">
+	<ul>
+	<li>
+	    <label for="number">Map width</label>
+	    <input type="number" name="name" maxlength="3" id="m_w_input">
+	    <span>Example: 100; Means 100 cells width</span>
+	</li>
+	<li>
+	    <label for="number">Map height</label>
+	    <input type="number" name="number" maxlength="3" id="m_h_input">
+	    <span>Example: 100; Means 100 cells height</span>
+	</li>
+	<li>
+	    <label for="number">Basic Cells Type</label>
+	    <input type="number" name="number" maxlength="3" id="c_t_input">
+	    <span>Example: 2; Means brickblock</span>
+	</li>
+	<li>
+	    <label for="number">Camera Move Speed</label>
+	    <input type="number" name="number" maxlength="3" id="cam_speed_input">
+	    <span>Example: 5; Means 5 x 20 px in second for lowest Scale. Basic is 1</span>
+	</li>
+	<li>
+	    <label for="number">Object Height Up/Down Speed(not Working)</label>
+	    <input type="number" name="number" maxlength="3" id="obj_h_s_input">
+	    <span>Example: 3; Means 3 x 20 px in second for lowest Scale. Basic is 1</span>
+	</li>
+	<li>
+	    <label for="number">Game FPS</label>
+	    <input type="number" name="number" maxlength="3" id="fps_input">
+	    <span>Example: 15. How many draw/count cycles per second. Basic is 20</span>
+	</li>
+
+	<li>
+	    <label for="spectator">Perlin Noise Generation</label>
+	    <input type="checkbox" name="spectator" maxlength="3" id="perlin-check">
+	    <input type="number" name="number" maxlength="3" id="perlin-det-det" placeholder="detalization Det">
+	    <input type="number" name="number" maxlength="3" id="perlin-h-det" placeholder="height Det">
+	    <input type="number" name="number" maxlength="3" id="perlin-seed-val" placeholder="seed id">
+	    <span>Basic is detDet: 20; heightDet: 30; seed: 0 [0..2^16]</span>
+	</li>
+
+	<li>
+	    <label for="spectator">Spectators Mode</label>
+	    <input type="checkbox" name="spectator" maxlength="3" id="spec-check">
+	    <input type="number" name="number" maxlength="3" id="spec-view-dist" placeholder="view distance">
+	    <input type="number" name="number" maxlength="3" id="spec-eye-height" placeholder="spectators eyeheight">
+	    <span>Basic is detDet: 20; heightDet: 30</span>
+	</li>
+
+	<li>
+    	<input type="button" value="Redraw Map" id="reDrawMap">
+	</li>
+	</ul>
+	</form>
+
+	<script src="lib/math.min.js" 	defer="order"></script>
+	<script src="lib/geometry.js" 	defer="order"></script>
+	
+	<script src="lib/canvas.js" 	defer="order"></script>
+	<script src="lib/perlin.js" 	defer="order"></script>
+	<script src="lib/fileSaver.js" 	defer="order"></script>
+	<script src="graphics.js" 		defer="order"></script>
+	<script src="game-data.js" 		defer="order"></script>
+	<script src="fps.js" 			defer="order"></script>
+</body>
+</html>

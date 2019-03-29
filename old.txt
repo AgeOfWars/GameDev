@@ -1,0 +1,115 @@
+/*
+	function drawMap() 
+	{
+		var worldSets 	= this;
+		var context 	= worldSets.animation.ctx;
+		var canvas 		= worldSets.animation.canvas;
+		var stricts 	= worldSets.stricts;
+		var camera 		= worldSets.camera;
+		var tiles 		= worldSets.tiles;
+		var localMap  	= worldSets.localMap;
+
+		context.clearRect(					0, 0, canvas.width, canvas.height);							// Clear screen
+		context.drawImage(tiles[0].imageF, 	0, 0, canvas.width, canvas.height);		// Draw void tile on canvas full screen
+
+		var tile, height, cell;
+
+		var size 		= stricts.maxMapCellSize / camera.scale;
+		var cSi 		= returnInBounds( 0, Math.floor( camera.shiftX / size ), stricts.maxMapWidth );
+		var cSj 		= returnInBounds( 0, Math.floor( camera.shiftY / size ), stricts.maxMapHeight );
+		var cFi 		= returnInBounds( cSi, Math.ceil( ( camera.shiftX + canvas.width ) / size ), stricts.maxMapWidth );
+		var cFj 		= returnInBounds( cSj, Math.ceil( ( camera.shiftY + canvas.height ) / size ), stricts.maxMapHeight );
+		var leftRest 	= camera.shiftX - size * cSi;
+		var topRest 	= camera.shiftY - size * cSj;
+
+		/* Draw [0][0] tile on screen by StartI and StartJ position
+		 */
+		/*
+		cell = localMap.requestCellbyIndex(cSi, cSj);
+		tile = tiles[ cell.getType() ];
+		if ( tile.desc != "void" ) 
+		{
+			height 	= cell.getHeight() / camera.scale;
+
+			tile = tiles[cell.getHeightMap()[0]];
+			context.drawImage(tile.imageH, leftRest * camera.scale, topRest * camera.scale, 128 - leftRest * camera.scale, 256 - topRest * camera.scale, 0, 0 - height, size - leftRest, 256 / camera.scale - topRest);
+
+			for ( var k = 1; k < cell.getHeightMap().length; k++ ) 
+			{
+				tile = tiles[cell.getHeightMap()[k]];
+				context.drawImage(tile.imageF, leftRest * camera.scale, topRest * camera.scale, 128 - leftRest * camera.scale, 256 - topRest * camera.scale, 0, 0 - height + size * (k + 1), size - leftRest, 256 / camera.scale - topRest);
+			}
+
+			//context.drawImage(tile.image, leftRest * camera.scale, topRest * camera.scale, 128 - leftRest * camera.scale, 256 - topRest * camera.scale, 0, 0 - height, size - leftRest, 256 / camera.scale - topRest);
+		}
+
+		/* Draw [0][j] first left column. X = 0, Y in cycle;
+		 *//*
+		for ( var j = cSj + 1; j < cFj; j++ ) 
+		{
+			cell = localMap.requestCellbyIndex(cSi, j);
+			tile = tiles[ cell.getType() ];
+			if ( tile.desc != "void" )
+			{
+				height 	= cell.getHeight() / camera.scale;
+
+				tile = tiles[cell.getHeightMap()[0]];
+				context.drawImage(tile.imageH, leftRest * camera.scale, 0, 128 - leftRest * camera.scale, 256, 0, (j - cSj) * size - topRest - height, size - leftRest, 256 / camera.scale);
+
+				for ( var k = 1; k < cell.getHeightMap().length; k++ ) 
+				{
+					tile = tiles[cell.getHeightMap()[k]];
+					context.drawImage(tile.imageF, leftRest * camera.scale, 0, 128 - leftRest * camera.scale, 256, 0, (j - cSj) * size - topRest - height + size * (k + 1), size - leftRest, 256 / camera.scale);
+				}
+
+				//context.drawImage(tile.image, leftRest * camera.scale, 0, 128 - leftRest * camera.scale, 256, 0, (j - cSj) * size - topRest - height, size - leftRest, 256 / camera.scale);
+			}
+		}
+	
+		/* Draw [i][0] first top row. X in cycle, Y = 0; 
+		 *//*
+		for ( var i = cSi + 1; i < cFi; i++ ) 
+		{
+			cell = localMap.requestCellbyIndex(i, cSj);
+			tile = tiles[ cell.getType() ];
+			if ( tile.desc != "void" )
+			{
+				height 	= cell.getHeight() / camera.scale;
+
+				tile = tiles[cell.getHeightMap()[0]];
+				context.drawImage(tile.imageH, 0, topRest * camera.scale, 128, 256 - topRest * camera.scale, (i - cSi) * size - leftRest, 0 - height, size, 256 / camera.scale - topRest);
+
+				for ( var k = 1; k < cell.getHeightMap().length; k++ ) 
+				{
+					tile = tiles[cell.getHeightMap()[k]];
+					context.drawImage(tile.imageF, 0, topRest * camera.scale, 128, 256 - topRest * camera.scale, (i - cSi) * size - leftRest, 0 - height + size * (k + 1), size, 256 / camera.scale - topRest); 
+				}
+
+				//context.drawImage(tile.image, 0, topRest * camera.scale, 128, 256 - topRest * camera.scale, (i - cSi) * size - leftRest, 0 - height, size, 256 / camera.scale - topRest);
+			}
+		}
+
+		/* Draw [][] else map tiles
+		 *//*
+		for ( var i = cSi + 1; i < cFi; i++ )
+			for ( var j = cSj + 1; j < cFj; j++ ) 
+			{
+				cell = localMap.requestCellbyIndex(i, j);
+				tile = tiles[ cell.getType() ];
+				if ( tile.desc != "void" ) 
+				{
+					height 	= cell.getHeight() / camera.scale;
+
+					tile = tiles[cell.getHeightMap()[0]];
+					context.drawImage(tile.imageH, (i - cSi) * size - leftRest, (j - cSj) * size - topRest - height, size, 256 / camera.scale); 
+
+					for ( var k = 1; k < cell.getHeightMap().length; k++ ) 
+					{
+						tile = tiles[cell.getHeightMap()[k]];
+						context.drawImage(tile.imageF, (i - cSi) * size - leftRest, (j - cSj) * size - topRest - height + size * (k + 1), size, 128 / camera.scale); 
+					}
+				}
+			}
+	}
+
+	*/

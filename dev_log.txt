@@ -1,0 +1,20 @@
+v 0.0.5
+- on saveFile text field, cancel button no longer creates "null.txt" saveFile. It cancels save as it should be
+- addObject button now cancels selected object and hides menu, when clicking on it
+- addObject button -> menu -> place Object now shows opacity grid, that will show avaible slots to set an object in future;
+
+27.03.2019
+v 0.0.7
+- multiClick on blocks no longer stacks growing and change type speed and step
+- mouse over on blocks now shows block user selects
+- now possible to change even foundation blocks by selecting them
+- spectators mode checkbox enabled in settings menu
+- spectators mode now changes drawing style of blocks that in and out of mouse pointer view Distance
+- spectators mode viewDist now possible to change in map settings
+- q no longer changes type to void blocks. Only delete button
+- fps stat now in left lower corner of game screen
+- fps animation cycle no longer collides with counting cycle
+- perlin noise seed [0..2^16] now generates different maps. Same seed generates same map
+
+(new problems)
+- voiding objects wont show foundations of another blocks 
